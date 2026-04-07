@@ -1,84 +1,1351 @@
-  <!doctype html>
+<!doctype html>
 <html lang="id" class="h-full">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🐰 Viana Store's - Premium Pricelist</title>
+
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --primary-color:#ec407a;
-      --secondary-color:#f06292;
-      --bg-soft:#fff7fb;
+      --primary:#ec4899;
+      --secondary:#f472b6;
+      --accent:#fb7185;
+      --bg:#fff7fb;
+      --bg2:#ffffff;
+      --surface:rgba(255,255,255,.92);
+      --surface2:rgba(255,255,255,.78);
       --text:#1f2937;
+      --muted:#6b7280;
+      --border:rgba(236,72,153,.14);
+      --shadow:0 18px 45px rgba(236,72,153,.12);
+      --shadow2:0 12px 25px rgba(15,23,42,.10);
+      --hero1:#fce4ec;
+      --hero2:#f9a8d4;
+      --hero3:#ec4899;
+      --hero4:#db2777;
     }
-    html, body { height: 100%; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
     * { box-sizing: border-box; }
+
     body {
       font-family: 'Poppins', sans-serif;
       color: var(--text);
-      background: linear-gradient(180deg, #fff7fb 0%, #ffffff 100%);
+      background:
+        radial-gradient(circle at top left, rgba(244,114,182,.16), transparent 26%),
+        radial-gradient(circle at top right, rgba(251,207,232,.22), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      overflow-x: hidden;
+      transition: background .25s ease, color .25s ease;
     }
+
+    body.theme-rose {
+      --bg:#fff7fb;
+      --bg2:#ffffff;
+      --surface:rgba(255,255,255,.92);
+      --surface2:rgba(255,255,255,.80);
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:rgba(236,72,153,.14);
+      --hero1:#fce4ec;
+      --hero2:#f9a8d4;
+      --hero3:#ec4899;
+      --hero4:#db2777;
+    }
+
+    body.theme-dark {
+      --bg:#050816;
+      --bg2:#0b1220;
+      --surface:rgba(15,23,42,.90);
+      --surface2:rgba(15,23,42,.74);
+      --text:#f8fafc;
+      --muted:#cbd5e1;
+      --border:rgba(148,163,184,.16);
+      --hero1:#0f172a;
+      --hero2:#111827;
+      --hero3:#1f2937;
+      --hero4:#020617;
+      background:
+        radial-gradient(circle at top left, rgba(236,72,153,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(148,163,184,.10), transparent 20%),
+        linear-gradient(180deg, #050816 0%, #0f172a 100%);
+      color: var(--text);
+    }
+
+    body.theme-light {
+      --bg:#ffffff;
+      --bg2:#f8fafc;
+      --surface:rgba(255,255,255,.96);
+      --surface2:rgba(255,255,255,.84);
+      --text:#111827;
+      --muted:#6b7280;
+      --border:rgba(148,163,184,.18);
+      --hero1:#ffffff;
+      --hero2:#e2e8f0;
+      --hero3:#cbd5e1;
+      --hero4:#94a3b8;
+      background:
+        radial-gradient(circle at top left, rgba(148,163,184,.14), transparent 26%),
+        radial-gradient(circle at top right, rgba(226,232,240,.20), transparent 22%),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      color: var(--text);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,.48);
+      border-bottom: 1px solid rgba(236,72,153,.08);
+    }
+    body.theme-dark .topbar {
+      background: rgba(2,6,23,.72);
+      border-bottom: 1px solid rgba(148,163,184,.12);
+    }
+
     .hero-premium {
-      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 25%, #f48fb1 50%, #ec407a 75%, #d81b60 100%);
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,.24), transparent 18%),
+        radial-gradient(circle at 82% 28%, rgba(255,255,255,.15), transparent 20%),
+        linear-gradient(135deg, var(--hero1) 0%, var(--hero2) 25%, var(--hero3) 55%, var(--hero4) 100%);
       position: relative;
       overflow: hidden;
     }
     .hero-premium::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      content:'';
+      position:absolute;
+      inset:0;
       background:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.28) 0%, transparent 45%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.18) 0%, transparent 45%);
-      z-index: 1;
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.22) 0%, transparent 35%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.12) 0%, transparent 35%);
+      pointer-events:none;
     }
-    .hero-content { position: relative; z-index: 2; }
 
-    .pattern-soft {
-      background-image:
-        radial-gradient(circle at 15% 40%, rgba(236, 64, 122, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 85% 20%, rgba(248, 187, 208, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 50% 90%, rgba(244, 143, 177, 0.06) 0%, transparent 50%);
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .glass {
+      background: var(--surface2);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
     }
 
     .card-premium {
-      background: rgba(255,255,255,.95);
-      backdrop-filter: blur(20px);
-      border: 1.5px solid rgba(236, 64, 122, 0.14);
-      box-shadow: 0 10px 30px rgba(236, 64, 122, 0.08);
-      transition: all .35s cubic-bezier(.34,1.56,.64,1);
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow2);
+      transition: all .25s cubic-bezier(.34,1.56,.64,1);
       overflow: hidden;
       position: relative;
     }
-    .card-premium::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
-      transition: left .6s ease;
-      pointer-events: none;
-    }
-    .card-premium:hover::before { left: 100%; }
+
     .card-premium:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(236, 64, 122, 0.18);
-      border-color: rgba(236, 64, 122, 0.32);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 45px rgba(236,72,153,.16);
     }
 
+    .card-premium::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      left:-100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent);
+      transition: left .65s ease;
+      pointer-events:none;
+    }
+    .card-premium:hover::before { left: 100%; }
+
     .btn-premium {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: #fff;
       border: none;
       cursor: pointer;
+      font-weight: 800;
+      letter-spacing: .2px;
+      transition: all .25s cubic-bezier(.34,1.56,.64,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-premium::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      left:-100%;
+      background: rgba(255,255,255,.18);
+      transition: left .35s ease;
+    }
+    .btn-premium:hover::before { left:100%; }
+    .btn-premium:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 12px 26px rgba(236,72,153,.30);
+    }
+
+    .btn-soft {
+      background: rgba(255,255,255,.76);
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: all .2s ease;
+    }
+    body.theme-dark .btn-soft {
+      background: rgba(15,23,42,.86);
+      color: #f8fafc;
+    }
+    .btn-soft:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15,23,42,.12);
+    }
+
+    .search-premium {
+      background: var(--surface);
+      border: 2px solid rgba(236,72,153,.14);
+      transition: all .25s ease;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .search-premium:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(236,72,153,.10);
+      outline: none;
+    }
+    body.theme-dark .search-premium::placeholder {
+      color: rgba(226,232,240,.72);
+    }
+
+    .category-btn {
+      transition: all .22s ease;
+      cursor: pointer;
       font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+    .category-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(236,72,153,.24);
+      transform: translateY(-2px);
+      border-color: transparent;
+    }
+    .category-btn:not(.active):hover {
+      background: rgba(236,72,153,.08);
+      transform: translateY(-1px);
+    }
+
+    .badge-hot {
+      background: linear-gradient(135deg, #fb7185, #ec4899);
+      animation: pulseBadge 2s ease-in-out infinite;
+    }
+    @keyframes pulseBadge {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    .fade-in { animation: fadeIn .45s ease forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .float-anim { animation: float 4.4s ease-in-out infinite; }
+    @keyframes float {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .divider-soft {
+      background: linear-gradient(90deg, transparent, rgba(236,72,153,.22), transparent);
+    }
+
+    .price-big {
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 900;
+      letter-spacing: -.6px;
+    }
+
+    .modal-backdrop {
+      background: rgba(15,23,42,.58);
+      backdrop-filter: blur(10px);
+    }
+    body.theme-dark .modal-backdrop {
+      background: rgba(2,6,23,.72);
+    }
+
+    .scrollbar-hide::-webkit-scrollbar { display:none; }
+    .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+
+    .menu-panel {
+      position:absolute;
+      top:58px;
+      right:0;
+      width:min(320px, calc(100vw - 32px));
+      transform-origin: top right;
+      transform: scale(.96) translateY(-6px);
+      opacity:0;
+      pointer-events:none;
+      transition: all .18s ease;
+      z-index: 80;
+    }
+    .menu-panel.open {
+      transform: scale(1) translateY(0);
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .menu-item {
+      transition: all .2s ease;
+    }
+    .menu-item:hover {
+      transform: translateX(2px);
+      background: rgba(236,72,153,.06);
+    }
+
+    .chip-stat {
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--border);
+    }
+    body.theme-dark .chip-stat {
+      background: rgba(15,23,42,.76);
+    }
+
+    .heart-on {
+      color: #fb7185;
+      fill: #fb7185;
+    }
+
+    .mobile-fab {
+      position: fixed;
+      right: 16px;
+      bottom: 18px;
+      z-index: 50;
+    }
+
+    body.theme-dark .topbar,
+    body.theme-dark .glass,
+    body.theme-dark .card-premium,
+    body.theme-dark .menu-panel,
+    body.theme-dark .btn-soft,
+    body.theme-dark .search-premium,
+    body.theme-dark .chip-stat {
+      color: #f8fafc !important;
+    }
+
+    body.theme-dark .text-gray-800,
+    body.theme-dark .text-gray-700,
+    body.theme-dark .text-gray-600,
+    body.theme-dark .text-gray-500,
+    body.theme-dark .text-gray-400 {
+      color: #e2e8f0 !important;
+    }
+
+    body.theme-dark .text-pink-300,
+    body.theme-dark .text-pink-400 {
+      color: #f9a8d4 !important;
+    }
+
+    body.theme-dark [class*="bg-white"] {
+      background-color: rgba(15,23,42,.92) !important;
+    }
+
+    body.theme-dark [class*="bg-gray-50"],
+    body.theme-dark [class*="bg-gray-100"],
+    body.theme-dark [class*="bg-pink-50"],
+    body.theme-dark [class*="bg-pink-100"] {
+      background-color: rgba(15,23,42,.90) !important;
+    }
+
+    body.theme-dark .menu-item:hover {
+      background: rgba(236,72,153,.10);
+    }
+
+    body.theme-dark .divider-soft {
+      background: linear-gradient(90deg, transparent, rgba(251,113,133,.28), transparent);
+    }
+
+    body.theme-dark footer {
+      border-top-color: rgba(148,163,184,.12) !important;
+    }
+  </style>
+</head>
+
+<body class="h-full theme-rose">
+  <div id="app" class="h-full w-full overflow-auto scrollbar-hide">
+    <div class="topbar px-4 py-3">
+      <div class="max-w-2xl mx-auto flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 text-white flex items-center justify-center shadow-lg shrink-0">
+            🐰
+          </div>
+          <div class="min-w-0">
+            <p id="top-store-name" class="font-black text-sm text-gray-800 truncate">Viana Store's</p>
+            <p class="text-[11px] text-pink-500 font-semibold truncate">Premium Pricelist • Elegance & Quality</p>
+          </div>
+        </div>
+
+        <div class="relative">
+          <button id="menu-btn" class="btn-soft w-11 h-11 rounded-2xl flex items-center justify-center">
+            <i data-lucide="menu" style="width:20px;height:20px;"></i>
+          </button>
+
+          <div id="menu-panel" class="menu-panel glass rounded-3xl p-3 shadow-2xl">
+            <div class="px-3 pt-2 pb-3 border-b border-pink-100/50">
+              <p class="text-xs uppercase tracking-[.22em] text-pink-500 font-black">Menu</p>
+              <p class="text-sm font-bold text-gray-800 mt-1">Pengaturan cepat</p>
+            </div>
+
+            <div class="py-2 space-y-1">
+              <button class="menu-item w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left" data-open="profile-modal">
+                <span class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center">👤</span>
+                <div>
+                  <p class="font-bold text-sm">Profil</p>
+                  <p class="text-[11px] text-gray-500">Info toko & kontak</p>
+                </div>
+              </button>
+
+              <button class="menu-item w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left" data-action="theme-rose">
+                <span class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center">🌸</span>
+                <div>
+                  <p class="font-bold text-sm">Tema Rose</p>
+                  <p class="text-[11px] text-gray-500">Soft & feminin</p>
+                </div>
+              </button>
+
+              <button class="menu-item w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left" data-action="theme-dark">
+                <span class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center">🌑</span>
+                <div>
+                  <p class="font-bold text-sm">Tema Hitam / Abu</p>
+                  <p class="text-[11px] text-gray-500">Elegan & gelap</p>
+                </div>
+              </button>
+
+              <button class="menu-item w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left" data-action="theme-light">
+                <span class="w-10 h-10 rounded-2xl bg-gray-100 text-gray-700 flex items-center justify-center">🤍</span>
+                <div>
+                  <p class="font-bold text-sm">Tema Putih</p>
+                  <p class="text-[11px] text-gray-500">Clean & minimal</p>
+                </div>
+              </button>
+
+              <button class="menu-item w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left" data-action="toggle-favorite-only">
+                <span class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center">💗</span>
+                <div>
+                  <p class="font-bold text-sm">Favorit Saja</p>
+                  <p class="text-[11px] text-gray-500">Tampilkan item favorit</p>
+                </div>
+              </button>
+
+              <button class="menu-item w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left" data-action="scroll-categories">
+                <span class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center">🧁</span>
+                <div>
+                  <p class="font-bold text-sm">Kategori</p>
+                  <p class="text-[11px] text-gray-500">Lihat semua menu</p>
+                </div>
+              </button>
+
+              <button class="menu-item w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left" data-action="scroll-footer">
+                <span class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center">📩</span>
+                <div>
+                  <p class="font-bold text-sm">Kontak</p>
+                  <p class="text-[11px] text-gray-500">Ke bagian bawah</p>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <header id="header-section" class="hero-premium px-4 pt-8 pb-12 text-center relative">
+      <div class="absolute top-4 left-6 text-4xl float-anim">🐰</div>
+      <div class="absolute top-12 right-8 text-3xl float-anim" style="animation-delay:.5s">✨</div>
+
+      <div class="hero-content max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-2 bg-white/30 backdrop-blur-md rounded-full px-5 py-2 mb-4 border border-white/20">
+          <span class="text-xs font-extrabold text-white tracking-[.25em] uppercase">Premium & Trusted</span>
+        </div>
+
+        <h1 id="store-title" class="text-4xl md:text-6xl font-black text-white drop-shadow-xl mb-3" style="font-family:'Playfair Display',serif; letter-spacing:-1px;">
+          🐰 Viana Store's
+        </h1>
+        <p class="text-pink-50 text-sm md:text-lg font-semibold mb-2" style="font-family:'Playfair Display',serif;">Elegance • Quality • Trust</p>
+        <p class="text-pink-50/90 text-sm font-medium max-w-2xl mx-auto mb-6">
+          Tampilan lebih modern, lebih cantik, dan lebih nyaman dipakai.
+        </p>
+
+        <div class="flex justify-center gap-3 flex-wrap">
+          <a href="https://chat.whatsapp.com/GJrGXtaVyN9Jjpo5EfPlVx" target="_blank" rel="noopener noreferrer"
+             class="bg-white/25 backdrop-blur-md text-white text-sm px-4 py-2.5 rounded-full font-semibold hover:bg-white/40 transition transform hover:scale-105 border border-white/20">💬 GC Store</a>
+          <a href="https://whatsapp.com/channel/0029VbCpeFj9hXF9CIemJv1k" target="_blank" rel="noopener noreferrer"
+             class="bg-white/25 backdrop-blur-md text-white text-sm px-4 py-2.5 rounded-full font-semibold hover:bg-white/40 transition transform hover:scale-105 border border-white/20">📢 Channel</a>
+          <a href="https://whatsapp.com/channel/0029VbCNWcCGufJ3Bq9zZc3w" target="_blank" rel="noopener noreferrer"
+             class="bg-white/25 backdrop-blur-md text-white text-sm px-4 py-2.5 rounded-full font-semibold hover:bg-white/40 transition transform hover:scale-105 border border-white/20">⭐ Reviews</a>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 mt-6 max-w-xl mx-auto">
+          <div class="chip-stat rounded-2xl px-3 py-4">
+            <p class="text-[11px] uppercase tracking-[.2em] text-pink-500 font-black">Kategori</p>
+            <p id="stat-categories" class="text-lg font-black mt-1">0</p>
+          </div>
+          <div class="chip-stat rounded-2xl px-3 py-4">
+            <p class="text-[11px] uppercase tracking-[.2em] text-pink-500 font-black">Produk</p>
+            <p id="stat-products" class="text-lg font-black mt-1">0</p>
+          </div>
+          <div class="chip-stat rounded-2xl px-3 py-4">
+            <p class="text-[11px] uppercase tracking-[.2em] text-pink-500 font-black">Favorit</p>
+            <p id="stat-favorites" class="text-lg font-black mt-1">0</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="px-4 -mt-7 relative z-20 max-w-2xl mx-auto mb-4">
+      <div class="glass rounded-2xl p-2">
+        <div class="relative">
+          <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-pink-300" style="width:20px;height:20px;"></i>
+          <input id="search-input" type="text" placeholder="Cari produk favorit..." class="search-premium w-full pl-12 pr-20 py-3.5 rounded-2xl text-sm font-medium transition">
+          <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-pink-500 px-3 py-2 rounded-xl hover:bg-pink-50 transition">
+            Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-4 mb-4 max-w-2xl mx-auto">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <p class="text-xs uppercase tracking-[.22em] text-pink-500 font-black">Kategori</p>
+        <div class="relative">
+          <select id="sort-select" class="btn-soft rounded-2xl text-xs font-bold px-3 py-2 pr-8 outline-none">
+            <option value="popular">Sort: Populer</option>
+            <option value="az">Sort: A-Z</option>
+            <option value="price">Sort: Termurah</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="category-tabs" class="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+        <button class="category-btn active whitespace-nowrap px-5 py-2.5 rounded-full text-xs border-2 border-pink-200 bg-pink-100 text-gray-800" data-cat="all">🌸 Semua</button>
+        <button class="category-btn whitespace-nowrap px-5 py-2.5 rounded-full text-xs border-2 border-pink-200 text-pink-600 bg-white" data-cat="social">📱 Social</button>
+        <button class="category-btn whitespace-nowrap px-5 py-2.5 rounded-full text-xs border-2 border-pink-200 text-pink-600 bg-white" data-cat="game">🎮 Game</button>
+        <button class="category-btn whitespace-nowrap px-5 py-2.5 rounded-full text-xs border-2 border-pink-200 text-pink-600 bg-white" data-cat="utility">⚡ Utility</button>
+        <button class="category-btn whitespace-nowrap px-5 py-2.5 rounded-full text-xs border-2 border-pink-200 text-pink-600 bg-white" data-cat="premium">👑 Premium</button>
+      </div>
+    </div>
+
+    <div class="px-4 mb-4 max-w-2xl mx-auto">
+      <div class="grid grid-cols-2 gap-3">
+        <button id="fav-filter-btn" class="btn-soft rounded-2xl py-3.5 px-4 text-sm font-bold flex items-center justify-center gap-2">
+          <i data-lucide="heart" style="width:18px;height:18px;"></i>
+          Favorit
+        </button>
+        <button id="copy-wa-btn" class="btn-soft rounded-2xl py-3.5 px-4 text-sm font-bold flex items-center justify-center gap-2">
+          <i data-lucide="copy" style="width:18px;height:18px;"></i>
+          Copy WA
+        </button>
+      </div>
+    </div>
+
+    <div id="products-container" class="px-4 pb-6 max-w-2xl mx-auto"></div>
+
+    <div class="px-4 pb-4 max-w-2xl mx-auto">
+      <div class="card-premium rounded-3xl p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="text-3xl">✨</div>
+          <h3 class="font-black text-lg" style="background: linear-gradient(135deg, #ec4899, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            Catatan Penting
+          </h3>
+        </div>
+        <div class="divider-soft h-px mb-4"></div>
+        <ul class="space-y-2.5 text-xs text-gray-700">
+          <li class="flex items-start gap-3"><span class="text-pink-500 font-bold text-base mt-0">✓</span><span>Isi format order langsung ke admin</span></li>
+          <li class="flex items-start gap-3"><span class="text-pink-500 font-bold text-base mt-0">✓</span><span>Wajib kirim SS bukti login untuk garansi</span></li>
+          <li class="flex items-start gap-3"><span class="text-pink-500 font-bold text-base mt-0">✓</span><span>Proses sesuai antrian (no rush)</span></li>
+          <li class="flex items-start gap-3"><span class="text-pink-500 font-bold text-base mt-0">✓</span><span>No cancel / no refund setelah proses</span></li>
+          <li class="flex items-start gap-3"><span class="text-pink-500 font-bold text-base mt-0">✓</span><span>Membeli = setuju</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="text-center py-8 px-4 border-t border-pink-100/30">
+      <p id="contact-info" class="text-xs font-semibold text-transparent bg-gradient-to-r from-pink-500 to-pink-700 bg-clip-text mb-2">📞 081234483507 • 📷 @thtsviana_</p>
+      <p id="footer-text" class="text-xs text-pink-300 font-light">© 2025 Viana Store's — All Rights Reserved 💎</p>
+    </footer>
+
+    <button id="to-top" class="mobile-fab btn-premium w-12 h-12 rounded-2xl shadow-2xl hidden items-center justify-center">
+      <i data-lucide="arrow-up" style="width:20px;height:20px;"></i>
+    </button>
+
+    <div id="order-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
+      <div class="absolute inset-0" onclick="closeModal()"></div>
+      <div class="relative bg-slate-950 rounded-3xl p-8 w-full max-w-sm shadow-2xl fade-in overflow-hidden">
+        <div class="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-pink-100 to-transparent rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-pink-100 to-transparent rounded-full translate-x-1/2 translate-y-1/2"></div>
+
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-300 hover:text-pink-500 transition transform hover:scale-110 z-10">
+          <i data-lucide="x" style="width:24px;height:24px;"></i>
+        </button>
+
+        <div class="relative z-10">
+          <div class="text-center mb-6">
+            <div class="text-5xl mb-3">🛍️</div>
+            <h2 class="font-black text-2xl text-white">
+              Konfirmasi Order
+            </h2>
+          </div>
+
+          <div class="bg-slate-900/90 rounded-2xl p-5 mb-6 border border-slate-700">
+            <p class="text-xs uppercase font-bold text-pink-400 tracking-widest mb-2" id="modal-app"></p>
+            <p class="font-black text-white text-lg mb-2" id="modal-plan"></p>
+            <p class="price-big text-transparent bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text" id="modal-price"></p>
+          </div>
+
+          <a id="modal-wa-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-premium block text-center py-4 rounded-2xl font-black text-base w-full mb-3 flex items-center justify-center gap-2">
+            <i data-lucide="message-circle" style="width:20px;height:20px;"></i>
+            <span>Order via WhatsApp</span>
+          </a>
+          <button id="copy-order-btn" class="btn-soft block w-full text-center py-3 rounded-2xl font-bold text-sm">
+            Copy format order
+          </button>
+          <p class="text-center text-xs text-slate-300 font-medium mt-3">Pesan akan otomatis disiapkan untuk admin ✨</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="profile-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
+      <div class="absolute inset-0" onclick="closeProfileModal()"></div>
+      <div class="relative w-full max-w-md bg-slate-950 rounded-3xl shadow-2xl overflow-hidden fade-in">
+        <div class="p-6 bg-gradient-to-br from-pink-500 via-pink-400 to-rose-500 text-white">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl">🐰</div>
+              <div>
+                <p class="text-xs uppercase tracking-[.22em] font-bold text-white/80">Profile Store</p>
+                <h3 class="text-2xl font-black" id="profile-title">Viana Store's</h3>
+              </div>
+            </div>
+            <button onclick="closeProfileModal()" class="w-10 h-10 rounded-2xl bg-white/15 hover:bg-white/25 flex items-center justify-center">
+              <i data-lucide="x" style="width:20px;height:20px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6 space-y-4">
+          <div class="glass rounded-3xl p-4">
+            <p class="text-xs uppercase tracking-[.18em] text-pink-500 font-black mb-1">Kontak</p>
+            <p class="font-bold text-gray-800" id="profile-contact">📞 081234483507</p>
+            <p class="text-sm text-gray-500">Instagram: @thtsviana_</p>
+          </div>
+
+          <div class="glass rounded-3xl p-4">
+            <p class="text-xs uppercase tracking-[.18em] text-pink-500 font-black mb-1">Tema</p>
+            <p class="text-sm text-gray-600">Gunakan menu kanan atas untuk ganti tema rose, hitam/abu, atau putih.</p>
+          </div>
+
+          <div class="glass rounded-3xl p-4">
+            <p class="text-xs uppercase tracking-[.18em] text-pink-500 font-black mb-2">Aksi Cepat</p>
+            <div class="grid grid-cols-2 gap-3">
+              <button class="btn-soft rounded-2xl py-3 font-bold text-sm" onclick="scrollToTop()">⬆️ Atas</button>
+              <button class="btn-soft rounded-2xl py-3 font-bold text-sm" onclick="scrollToCategories()">🧁 Kategori</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const WA_NUMBER = '6281234483507';
+    const FAVORITES_KEY = 'viana_favorites';
+    const THEME_KEY = 'viana_theme';
+
+    const products = [
+      {
+        cat: 'social',
+        app: 'Instagram Followers',
+        emoji: '🌸',
+        popular: true,
+        items: [
+          { name: 'refill 30d - 100', price: 6000 },
+          { name: 'refill 30d - 200', price: 10000 },
+          { name: 'refill 30d - 300', price: 12500 },
+          { name: 'refill 30d - 400', price: 16000 },
+          { name: 'refill 30d - 500', price: 17500 },
+          { name: 'refill 30d - 600', price: 20000 },
+          { name: 'refill 30d - 700', price: 23500 },
+          { name: 'refill 30d - 800', price: 25000 },
+          { name: 'refill 30d - 900', price: 27500 },
+          { name: 'refill 30d - 1.000', price: 29000 },
+          { name: 'no refill - 100', price: 5500 },
+          { name: 'no refill - 200', price: 8000 },
+          { name: 'no refill - 300', price: 10000 },
+          { name: 'no refill - 400', price: 13000 },
+          { name: 'no refill - 500', price: 15000 },
+          { name: 'no refill - 600', price: 17000 },
+          { name: 'no refill - 700', price: 18000 },
+          { name: 'no refill - 800', price: 20000 },
+          { name: 'no refill - 900', price: 23000 },
+          { name: 'no refill - 1.000', price: 25000 }
+        ]
+      },
+      {
+        cat: 'social',
+        app: 'TikTok Followers',
+        emoji: '🎵',
+        popular: true,
+        items: [
+          { name: 'refill 30d - 100', price: 6500 },
+          { name: 'refill 30d - 200', price: 9000 },
+          { name: 'refill 30d - 300', price: 11700 },
+          { name: 'refill 30d - 400', price: 14000 },
+          { name: 'refill 30d - 500', price: 16500 },
+          { name: 'refill 30d - 600', price: 19000 },
+          { name: 'refill 30d - 700', price: 22500 },
+          { name: 'refill 30d - 800', price: 25000 },
+          { name: 'refill 30d - 900', price: 27500 },
+          { name: 'refill 30d - 1.000', price: 29000 },
+          { name: 'no refill - 100', price: 5700 },
+          { name: 'no refill - 200', price: 8000 },
+          { name: 'no refill - 300', price: 10000 },
+          { name: 'no refill - 400', price: 12000 },
+          { name: 'no refill - 500', price: 14000 },
+          { name: 'no refill - 600', price: 16000 },
+          { name: 'no refill - 700', price: 18000 },
+          { name: 'no refill - 800', price: 20000 },
+          { name: 'no refill - 900', price: 24000 },
+          { name: 'no refill - 1.000', price: 26000 }
+        ]
+      },
+      { cat:'premium', app:'Alight Motion (AM)', emoji:'🎧', items:[{ name:'1 Tahun Buyer', price:3600 }, { name:'1 Tahun Generator', price:3800 }, { name:'1 Tahun Seller', price:10000 }] },
+      { cat:'premium', app:'CapCut Premium', emoji:'🎬', popular:true, items:[{ name:'1 Bulan Sharing (3U)', price:7000 }, { name:'35 Hari Private', price:9000 }, { name:'42 Hari Private', price:12500 }, { name:'7 Hari Private', price:5000 }] },
+      { cat:'premium', app:'Netflix Premium', emoji:'🍿', popular:true, items:[{ name:'1 Minggu 2U', price:9500 }, { name:'1 Minggu 1U', price:14000 }, { name:'1 Bulan 2U', price:18500 }, { name:'1 Bulan 1U', price:27000 }, { name:'1 Bulan Semi Private', price:30500 }, { name:'1 Bulan Private', price:185000 }] },
+      { cat:'premium', app:'Spotify Premium', emoji:'🎶', items:[{ name:'1B Famplan', price:19000 }, { name:'1B Indplan', price:20000 }, { name:'3B Nogar', price:16000 }] },
+      { cat:'premium', app:'Wink Premium', emoji:'✨', items:[{ name:'1 Bulan', price:10000 }, { name:'7 Hari', price:7000 }] },
+      { cat:'premium', app:'iQIYI Premium', emoji:'📺', items:[{ name:'1 Bulan Standar', price:5500 }, { name:'1 Bulan Premium', price:7600 }, { name:'1 Tahun Standar', price:10000 }, { name:'1 Tahun Premium', price:15000 }, { name:'1 Bulan Private', price:22600 }] },
+      { cat:'premium', app:'Apple Music', emoji:'🎵', items:[{ name:'1B Famplan', price:7000 }, { name:'1B Famhead', price:9000 }, { name:'1B Individual', price:8000 }] },
+      { cat:'premium', app:'Bstation', emoji:'🎥', items:[{ name:'1 Bulan Sharing', price:6500 }, { name:'1 Tahun Sharing', price:11000 }, { name:'1 Bulan Private', price:34600 }] },
+      { cat:'premium', app:'Disney+ Hotstar', emoji:'🎬', items:[{ name:'1 Bulan 6U', price:29000 }, { name:'1 Minggu 6U', price:19000 }, { name:'1 Bulan 10U', price:22000 }, { name:'1 Minggu 10U', price:12000 }] },
+      { cat:'premium', app:'YouTube Premium', emoji:'▶️', popular:true, items:[{ name:'1 Bulan Family', price:4000 }, { name:'1 Bulan Indian', price:9800 }, { name:'Jaspay YT', price:5700 }, { name:'2 Bulan Mixplan', price:15000 }] },
+      { cat:'premium', app:'ChatGPT', emoji:'🤖', items:[{ name:'1 Bulan Invite', price:15000 }, { name:'1 Bulan Head', price:23000 }] },
+      { cat:'premium', app:'Wibuku Premium', emoji:'🐾', items:[{ name:'1 Bulan Android', price:11000 }] },
+      {
+        cat: 'game',
+        app: 'Free Fire Top Up',
+        emoji: '💎',
+        popular: true,
+        items: [
+          { name: 'Membership Mingguan', price: 29600 },
+          { name: 'Membership Bulanan', price: 87500 },
+          { name: 'Weekly Lite', price: 18000 },
+          { name: 'Booyah Pass Card', price: 43000 },
+          { name: '5 Diamond', price: 1500 },
+          { name: '50 Diamond', price: 8000 },
+          { name: '70 Diamond', price: 10500 },
+          { name: '100 Diamond', price: 16500 },
+          { name: '140 Diamond', price: 19500 },
+          { name: '210 Diamond', price: 29700 },
+          { name: '280 Diamond', price: 38500 },
+          { name: '355 Diamond', price: 48700 },
+          { name: '425 Diamond', price: 59700 },
+          { name: '500 Diamond', price: 67500 },
+          { name: '635 Diamond', price: 85800 },
+          { name: '720 Diamond', price: 94700 },
+          { name: '860 Diamond', price: 114600 },
+          { name: '1.000 Diamond', price: 131500 }
+        ]
+      },
+      {
+        cat: 'game',
+        app: 'Roblox via Login',
+        emoji: '🟣',
+        popular: true,
+        items: [
+          { name: '80 Robux', price: 17800 },
+          { name: '160 Robux', price: 34000 },
+          { name: '240 Robux', price: 48000 },
+          { name: '320 Robux', price: 64000 },
+          { name: '500 Robux', price: 70000 },
+          { name: '1.000 Robux', price: 143000 },
+          { name: '1.500 Robux', price: 207000 },
+          { name: '2.000 Robux', price: 270000 },
+          { name: '2.500 Robux', price: 339500 },
+          { name: '3.000 Robux', price: 405000 }
+        ]
+      },
+      {
+        cat: 'game',
+        app: 'Mobile Legends Diamond',
+        emoji: '⚔️',
+        items: [
+          { name: '5 Diamond (5 + 0)', price: 2000 },
+          { name: '12 Diamond (11 + 1)', price: 5000 },
+          { name: '19 Diamond (17 + 2)', price: 6500 },
+          { name: '28 Diamond (25 + 3)', price: 9000 },
+          { name: '44 Diamond (40 + 4)', price: 14000 },
+          { name: '59 Diamond (53 + 6)', price: 19000 },
+          { name: '85 Diamond (77 + 8)', price: 25500 },
+          { name: '170 Diamond (154 + 16)', price: 48000 },
+          { name: '240 Diamond (217 + 23)', price: 65000 },
+          { name: '296 Diamond (256 + 40)', price: 80000 }
+        ]
+      },
+      {
+        cat: 'utility',
+        app: 'Pulsa Smartfren',
+        emoji: '📶',
+        items: [
+          { name: '5.000', price: 7000 }, { name: '10.000', price: 12000 }, { name: '12.000', price: 14000 },
+          { name: '15.000', price: 17000 }, { name: '20.000', price: 22000 }, { name: '25.000', price: 27000 },
+          { name: '30.000', price: 33000 }, { name: '35.000', price: 37000 }, { name: '40.000', price: 44000 },
+          { name: '45.000', price: 47000 }, { name: '50.000', price: 55500 }
+        ]
+      },
+      {
+        cat: 'game',
+        app: 'PUBG Mobile UC',
+        emoji: '🎮',
+        items: [
+          { name: '60 UC', price: 22000 },
+          { name: '120 UC', price: 33000 },
+          { name: '180 UC', price: 45000 },
+          { name: '240 UC', price: 61000 },
+          { name: '325 UC', price: 75000 },
+          { name: '660 UC', price: 147000 },
+          { name: '1320 UC', price: 298000 },
+          { name: '1800 UC', price: 365500 },
+          { name: '3850 UC', price: 735000 },
+          { name: '8100 UC', price: 1455000 }
+        ]
+      },
+      {
+        cat: 'utility',
+        app: 'Pulsa Telkomsel',
+        emoji: '☎️',
+        items: [
+          { name: '2.000', price: 4000 }, { name: '3.000', price: 5000 }, { name: '4.000', price: 6000 },
+          { name: '5.000', price: 7000 }, { name: '10.000', price: 12000 }, { name: '15.000', price: 17000 },
+          { name: '20.000', price: 22000 }, { name: '25.000', price: 27000 }, { name: '30.000', price: 32000 },
+          { name: '35.000', price: 37000 }, { name: '40.000', price: 43000 }
+        ]
+      },
+      {
+        cat: 'utility',
+        app: 'Pulsa XL',
+        emoji: '💠',
+        items: [
+          { name: '5.000', price: 7000 }, { name: '10.000', price: 12000 }, { name: '15.000', price: 17000 },
+          { name: '25.000', price: 27000 }, { name: '30.000', price: 32000 }, { name: '40.000', price: 42000 },
+          { name: '50.000', price: 52000 }, { name: '60.000', price: 62000 }, { name: '70.000', price: 72000 }
+        ]
+      },
+      {
+        cat: 'utility',
+        app: 'Pulsa AXIS',
+        emoji: '🔵',
+        items: [
+          { name: '5.000', price: 7000 }, { name: '10.000', price: 12000 }, { name: '15.000', price: 17000 },
+          { name: '25.000', price: 27000 }, { name: '30.000', price: 32000 }, { name: '40.000', price: 42000 },
+          { name: '50.000', price: 52000 }, { name: '60.000', price: 62000 }, { name: '70.000', price: 72000 }
+        ]
+      },
+      {
+        cat: 'utility',
+        app: 'Pulsa TRI (3)',
+        emoji: '🌙',
+        items: [
+          { name: '5.000', price: 7000 }, { name: '10.000', price: 12000 }, { name: '15.000', price: 17000 },
+          { name: '20.000', price: 22000 }, { name: '25.000', price: 27000 }, { name: '30.000', price: 32000 },
+          { name: '40.000', price: 42000 }, { name: '50.000', price: 52000 }
+        ]
+      },
+      {
+        cat: 'utility',
+        app: 'Pulsa by.U',
+        emoji: '🟢',
+        items: [
+          { name: '2.000', price: 4000 }, { name: '3.000', price: 5000 }, { name: '4.000', price: 6000 },
+          { name: '5.000', price: 8000 }, { name: '6.000', price: 9000 }, { name: '7.000', price: 10000 },
+          { name: '8.000', price: 11000 }, { name: '10.000', price: 13000 }, { name: '15.000', price: 18000 },
+          { name: '20.000', price: 24000 }, { name: '25.000', price: 28000 }
+        ]
+      },
+      {
+        cat: 'utility',
+        app: 'Token PLN',
+        emoji: '⚡',
+        items: [
+          { name: '5.000', price: 9900 }, { name: '10.000', price: 14900 }, { name: '15.000', price: 19900 },
+          { name: '20.000', price: 25900 }, { name: '25.000', price: 29800 }, { name: '50.000', price: 56000 },
+          { name: '100.000', price: 108000 }, { name: '200.000', price: 208000 }
+        ]
+      }
+    ];
+
+    let activeCat = 'all';
+    let searchQuery = '';
+    let sortMode = 'popular';
+    let favoriteOnly = false;
+    let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '{}');
+    let currentOrder = null;
+
+    const productCount = products.reduce((sum, g) => sum + g.items.length, 0);
+    const categoryCount = new Set(products.map(p => p.cat)).size;
+
+    function formatPrice(p) {
+      return 'Rp ' + Number(p).toLocaleString('id-ID');
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function getThemeClass(theme) {
+      if (theme === 'dark') return 'theme-dark';
+      if (theme === 'light') return 'theme-light';
+      return 'theme-rose';
+    }
+
+    function renderIcons() {
+      if (window.lucide?.createIcons) window.lucide.createIcons();
+    }
+
+    function setTheme(theme) {
+      document.body.classList.remove('theme-rose', 'theme-dark', 'theme-light');
+      document.body.classList.add(getThemeClass(theme));
+      localStorage.setItem(THEME_KEY, theme);
+      renderIcons();
+    }
+
+    function getTheme() {
+      return localStorage.getItem(THEME_KEY) || 'rose';
+    }
+
+    function toggleMenu(forceClose = false) {
+      const panel = document.getElementById('menu-panel');
+      if (forceClose) {
+        panel.classList.remove('open');
+        return;
+      }
+      panel.classList.toggle('open');
+    }
+
+    function openProfileModal() {
+      document.getElementById('profile-modal').classList.remove('hidden');
+      renderIcons();
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profile-modal').classList.add('hidden');
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        return true;
+      }
+    }
+
+    function openModal(app, plan, price) {
+      currentOrder = { app, plan, price };
+      document.getElementById('modal-app').textContent = app;
+      document.getElementById('modal-plan').textContent = plan;
+      document.getElementById('modal-price').textContent = formatPrice(price);
+
+      const msg = `Halo kak! 🐰
+
+Saya mau order di Viana Store:
+
+🛍️ Produk: ${app}
+📦 Paket: ${plan}
+💰 Harga: ${formatPrice(price)}
+
+Mohon diproses ya kak~ ✨`;
+
+      const config = window.elementSdk?.config || {};
+      const wa = config.whatsapp_number || WA_NUMBER;
+      document.getElementById('modal-wa-link').href = `https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
+      document.getElementById('order-modal').classList.remove('hidden');
+
+      const copyBtn = document.getElementById('copy-order-btn');
+      copyBtn.onclick = async () => {
+        await copyText(msg);
+        copyBtn.textContent = 'Tersalin!';
+        setTimeout(() => copyBtn.textContent = 'Copy format order', 1400);
+      };
+
+      renderIcons();
+    }
+
+    function closeModal() {
+      document.getElementById('order-modal').classList.add('hidden');
+    }
+
+    function toggleFavorite(app, plan, price) {
+      const key = `${app}__${plan}__${price}`;
+      if (favorites[key]) delete favorites[key];
+      else favorites[key] = { app, plan, price };
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+      renderAll();
+    }
+
+    function isFavorite(app, plan, price) {
+      return !!favorites[`${app}__${plan}__${price}`];
+    }
+
+    function renderStats() {
+      document.getElementById('stat-categories').textContent = categoryCount;
+      document.getElementById('stat-products').textContent = productCount;
+      document.getElementById('stat-favorites').textContent = Object.keys(favorites).length;
+    }
+
+    function sortGroups(list) {
+      const clone = [...list];
+      if (sortMode === 'az') {
+        clone.sort((a, b) => a.app.localeCompare(b.app, 'id'));
+      } else if (sortMode === 'price') {
+        clone.sort((a, b) => Math.min(...a.items.map(i => i.price)) - Math.min(...b.items.map(i => i.price)));
+      } else {
+        clone.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+      }
+      return clone;
+    }
+
+    function renderProducts() {
+      const container = document.getElementById('products-container');
+
+      let filtered = products.filter(g => {
+        const catMatch = activeCat === 'all' || g.cat === activeCat;
+        if (!catMatch) return false;
+
+        const q = searchQuery.trim().toLowerCase();
+        if (!q) return true;
+
+        return g.app.toLowerCase().includes(q) || g.items.some(i => i.name.toLowerCase().includes(q));
+      });
+
+      filtered = sortGroups(filtered);
+
+      if (favoriteOnly) {
+        filtered = filtered.filter(g => g.items.some(i => isFavorite(g.app, i.name, i.price)));
+      }
+
+      if (!filtered.length) {
+        container.innerHTML = `
+          <div class="text-center py-16 text-pink-300">
+            <div class="text-6xl mb-4">🎀</div>
+            <p class="font-bold text-base">Produk tidak ditemukan, coba cari lagi yuk~</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach((g, gi) => {
+        const q = searchQuery.trim().toLowerCase();
+        let items = !q
+          ? g.items
+          : g.items.filter(i => i.name.toLowerCase().includes(q) || g.app.toLowerCase().includes(q));
+
+        if (favoriteOnly) {
+          items = items.filter(i => isFavorite(g.app, i.name, i.price));
+        }
+
+        if (!items.length) return;
+
+        html += `
+          <div class="card-premium rounded-2xl p-5 mb-5 fade-in" style="animation-delay:${gi * 40}ms">
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3 flex-1 min-w-0">
+                <span class="text-3xl flex-shrink-0">${g.emoji}</span>
+                <h3 class="font-black text-gray-800 text-sm md:text-base truncate">${escapeHtml(g.app)}</h3>
+              </div>
+              <div class="flex items-center gap-2">
+                ${g.popular ? '<span class="badge-hot text-white px-2.5 py-1 rounded-full text-xs font-bold flex-shrink-0">🔥 Hot</span>' : ''}
+              </div>
+            </div>
+            <div class="space-y-2.5">
+        `;
+
+        items.forEach(item => {
+          const itemName = escapeHtml(item.name);
+          const fav = isFavorite(g.app, item.name, item.price);
+
+          html += `
+            <div class="flex items-center justify-between gap-3 bg-gradient-to-r from-pink-50/80 to-pink-50/30 rounded-xl px-3.5 py-3 hover:from-pink-100/80 hover:to-pink-100/30 transition group">
+              <div class="flex-1 min-w-0">
+                <p class="text-xs font-semibold text-gray-700 truncate group-hover:text-gray-900 transition">✦ ${itemName}</p>
+                <p class="text-pink-600 font-black text-sm group-hover:text-pink-700">${formatPrice(item.price)}</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="toggleFavorite('${g.app.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.price})" class="w-10 h-10 rounded-xl btn-soft flex items-center justify-center">
+                  <i data-lucide="heart" class="${fav ? 'heart-on' : ''}" style="width:18px;height:18px;"></i>
+                </button>
+                <button onclick="openModal('${g.app.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.price})" class="btn-premium px-4 py-2 rounded-lg text-xs font-bold flex-shrink-0">
+                  Beli
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      renderIcons();
+    }
+
+    function renderAll() {
+      renderStats();
+      renderProducts();
+      renderIcons();
+    }
+
+    function scrollToTop() {
+      document.getElementById('app').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function scrollToCategories() {
+      document.getElementById('category-tabs').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function scrollToFooter() {
+      document.querySelector('footer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    async function copyWA() {
+      await copyText(`https://wa.me/${WA_NUMBER}`);
+      const btn = document.getElementById('copy-wa-btn');
+      const old = btn.innerHTML;
+      btn.innerHTML = '✅ Tersalin';
+      setTimeout(() => { btn.innerHTML = old; renderIcons(); }, 1200);
+    }
+
+    document.getElementById('category-tabs').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-cat]');
+      if (!btn) return;
+
+      activeCat = btn.dataset.cat;
+      document.querySelectorAll('.category-btn').forEach(t => {
+        if (t.dataset.cat === activeCat) {
+          t.classList.add('active');
+          t.classList.remove('text-pink-600', 'bg-white');
+          t.classList.add('bg-pink-100');
+        } else {
+          t.classList.remove('active');
+          t.classList.remove('bg-pink-100');
+          t.classList.add('text-pink-600', 'bg-white');
+        }
+      });
+      renderAll();
+    });
+
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderAll();
+    });
+
+    document.getElementById('clear-search').addEventListener('click', () => {
+      document.getElementById('search-input').value = '';
+      searchQuery = '';
+      renderAll();
+    });
+
+    document.getElementById('sort-select').addEventListener('change', (e) => {
+      sortMode = e.target.value;
+      renderAll();
+    });
+
+    document.getElementById('fav-filter-btn').addEventListener('click', () => {
+      favoriteOnly = !favoriteOnly;
+      const btn = document.getElementById('fav-filter-btn');
+      btn.classList.toggle('bg-pink-100', favoriteOnly);
+      btn.classList.toggle('text-pink-700', favoriteOnly);
+      renderAll();
+    });
+
+    document.getElementById('copy-wa-btn').addEventListener('click', copyWA);
+
+    document.getElementById('menu-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    document.addEventListener('click', (e) => {
+      const panel = document.getElementById('menu-panel');
+      const btn = document.getElementById('menu-btn');
+      if (!panel.contains(e.target) && !btn.contains(e.target)) panel.classList.remove('open');
+    });
+
+    document.querySelectorAll('[data-open="profile-modal"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleMenu(true);
+        openProfileModal();
+      });
+    });
+
+    document.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.action;
+        toggleMenu(true);
+
+        if (action === 'theme-rose') setTheme('rose');
+        if (action === 'theme-dark') setTheme('dark');
+        if (action === 'theme-light') setTheme('light');
+        if (action === 'toggle-favorite-only') {
+          favoriteOnly = !favoriteOnly;
+          renderAll();
+        }
+        if (action === 'scroll-categories') scrollToCategories();
+        if (action === 'scroll-footer') scrollToFooter();
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeProfileModal();
+        document.getElementById('menu-panel').classList.remove('open');
+      }
+    });
+
+    document.getElementById('to-top').addEventListener('click', scrollToTop);
+
+    const defaultConfig = {
+      store_name: "🐰 Viana Store's",
+      whatsapp_number: WA_NUMBER,
+      footer_text: "© 2025 Viana Store's — All Rights Reserved 💎",
+      contact_info: "📞 081234483507 • 📷 @thtsviana_",
+      background_color: '#fff7fb',
+      surface_color: '#ffffff',
+      text_color: '#1f2937',
+      primary_color: '#ec4899',
+      secondary_color: '#f472b6',
+      font_family: 'Poppins',
+      font_size: 14
+    };
+
+    function applyConfig(c) {
+      const el = (id) => document.getElementById(id);
+
+      if (el('store-title')) el('store-title').textContent = c.store_name || defaultConfig.store_name;
+      if (el('top-store-name')) el('top-store-name').textContent = c.store_name || defaultConfig.store_name;
+      if (el('profile-title')) el('profile-title').textContent = c.store_name || defaultConfig.store_name;
+      if (el('footer-text')) el('footer-text').textContent = c.footer_text || defaultConfig.footer_text;
+      if (el('contact-info')) el('contact-info').textContent = c.contact_info || defaultConfig.contact_info;
+      if (el('profile-contact')) el('profile-contact').textContent = c.contact_info || defaultConfig.contact_info;
+
+      const primary = c.primary_color || defaultConfig.primary_color;
+      const secondary = c.secondary_color || defaultConfig.secondary_color;
+      const bg = c.background_color || defaultConfig.background_color;
+      const txt = c.text_color || defaultConfig.text_color;
+      const font = c.font_family || defaultConfig.font_family;
+      const fontSize = c.font_size || defaultConfig.font_size;
+
+      document.documentElement.style.setProperty('--primary', primary);
+      document.documentElement.style.setProperty('--secondary', secondary);
+      document.documentElement.style.setProperty('--bg', bg);
+      document.documentElement.style.setProperty('--bg2', '#ffffff');
+      document.documentElement.style.setProperty('--text', txt);
+
+      if (el('app')) el('app').style.backgroundColor = bg;
+      document.body.style.color = txt;
+      document.body.style.fontFamily = `${font}, 'Poppins', sans-serif`;
+      document.body.style.fontSize = fontSize + 'px';
+
+      renderIcons();
+    }
+
+    window.elementSdk?.init?.({
+      defaultConfig,
+      onConfigChange: async (config) => applyConfig(config),
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          { get: () => config.primary_color || defaultConfig.primary_color, set: v => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+          { get: () => config.secondary_color || defaultConfig.secondary_color, set: v => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } },
+          { get: () => config.background_color || defaultConfig.background_color, set: v => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+          { get: () => config.surface_color || defaultConfig.surface_color, set: v => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+          { get: () => config.text_color || defaultConfig.text_color, set: v => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: v => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: v => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+        }
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['store_name', config.store_name || defaultConfig.store_name],
+        ['whatsapp_number', config.whatsapp_number || defaultConfig.whatsapp_number],
+        ['footer_text', config.footer_text || defaultConfig.footer_text],
+        ['contact_info', config.contact_info || defaultConfig.contact_info]
+      ])
+    });
+
+    const savedTheme = getTheme();
+    setTheme(savedTheme);
+    applyConfig(defaultConfig);
+    renderAll();
+
+    const appEl = document.getElementById('app');
+    const toTopBtn = document.getElementById('to-top');
+
+    appEl.addEventListener('scroll', () => {
+      const scrolled = appEl.scrollTop;
+      toTopBtn.classList.toggle('hidden', scrolled < 500);
+      toTopBtn.classList.toggle('flex', scrolled >= 500);
+    });
+
+    window.addEventListener('click', () => {
+      document.getElementById('menu-panel').classList.remove('open');
+    });
+
+    window.scrollToTop = scrollToTop;
+    window.scrollToCategories = scrollToCategories;
+    window.closeModal = closeModal;
+    window.closeProfileModal = closeProfileModal;
+    window.toggleFavorite = toggleFavorite;
+    window.openModal = openModal;
+
+    renderIcons();
+  </script>
+</body>
+</html>      font-weight: 700;
       letter-spacing: .3px;
       transition: all .3s cubic-bezier(.34,1.56,.64,1);
       position: relative;
